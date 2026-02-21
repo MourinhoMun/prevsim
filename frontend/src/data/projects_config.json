@@ -1,0 +1,866 @@
+{
+  "projects": [
+    {
+      "id": "rich_hump",
+      "name_zh": "富贵包消除",
+      "name_en": "Rich Hump Removal",
+      "body_part": "neck",
+      "description": "消除颈后部脂肪垫，恢复颈部线条",
+      "views": [
+        "颈部和上背部的背面视角",
+        "45度后斜侧视角",
+        "颈根部背面特写"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "颈部根部轻微肿胀，轻度脊柱后凸，C7椎骨处轻微突出",
+          "after": "颈部曲线平滑，体态笔直，无突出"
+        },
+        "significant": {
+          "before": "颈部根部有巨大的脂肪垫突起，富贵包，严重的脊柱后凸，圆肩，头前伸体态",
+          "after": "完美的直颈线条，优雅的90度直角肩，上背部平坦，视觉上颈部拉长"
+        }
+      }
+    },
+    {
+      "id": "jawline_chin",
+      "name_zh": "下颌缘/下巴",
+      "name_en": "Jawline & Chin Definition",
+      "body_part": "face_lower",
+      "description": "改善下巴后缩，清晰下颌线 (去头去脸)",
+      "views": [
+        "下半张脸和颈部的超近特写，侧面视角",
+        "下颌线和下巴的特写，45度角"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "下巴略圆，下颌线定义模糊",
+          "after": "下颌线清晰，下巴和脖子分界分明"
+        },
+        "significant": {
+          "before": "严重下巴后缩，下颌线微弱，双下巴，下巴和脖子连在一起，下巴皮肤松弛",
+          "after": "刀削般的锋利下颌线，下巴挺翘，皮肤紧致，清晰的L型下颌角"
+        }
+      }
+    },
+    {
+      "id": "breast_augment",
+      "name_zh": "假体隆胸",
+      "name_en": "Breast Augmentation",
+      "body_part": "chest",
+      "description": "改善胸部轮廓，优化曲线",
+      "views": [
+        "上身正面视角，聚焦胸部轮廓",
+        "上半身45度侧面视角，展示曲线"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "基础胸部轮廓，自然形态，无特征",
+          "after": "增强的胸部轮廓，更立体的形态，优化的曲线"
+        },
+        "significant": {
+          "before": "胸部轮廓平坦，缺乏曲线，形态扁平",
+          "after": "丰盈的胸部轮廓，高挺的形态，优化的比例，视觉上更协调"
+        }
+      }
+    },
+    {
+      "id": "breast_reduction",
+      "name_zh": "巨乳缩小",
+      "name_en": "Breast Reduction",
+      "body_part": "chest",
+      "description": "减轻胸部负担，提升形态，矫正下垂",
+      "views": [
+        "上身正面视角，自然站立",
+        "上半身45度侧面视角，展示提升效果"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "胸部略微下垂，体积稍大，不仅有美学困扰",
+          "after": "胸部提升，体积适中，更年轻的形态"
+        },
+        "significant": {
+          "before": "极其巨大的胸部负担，严重的乳房下垂（Ptosis），皮肤拉伸，身体重心前倾，肩膀勒痕",
+          "after": "显著缩小的体积，挺拔的形态，乳晕位置提升，身体姿态直立，运动型胸部"
+        }
+      }
+    },
+    {
+      "id": "lipo_abdomen",
+      "name_zh": "腹部吸脂/马甲线",
+      "name_en": "Abdominal Liposuction",
+      "body_part": "abdomen",
+      "description": "去除腹部脂肪，雕刻肌肉线条",
+      "views": [
+        "躯干正面视角，裁剪至颈部和大腿",
+        "腹部腰线正面视图"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "下腹部松软，缺乏线条，腹部平坦但无肌肉",
+          "after": "紧致的腹部，可见垂直腹肌线（马甲线），平坦的小腹"
+        },
+        "significant": {
+          "before": "腹部隆起，救生圈，多余腹部脂肪，下腹下垂，腰线模糊",
+          "after": "六块腹肌清晰可见，运动型硬腹，极其平坦，侧腹肌线条雕刻，漏斗形细腰"
+        }
+      }
+    },
+    {
+      "id": "lipo_thigh",
+      "name_zh": "大腿吸脂",
+      "name_en": "Thigh Liposuction",
+      "body_part": "legs",
+      "description": "瘦大腿，塑造腿部缝隙",
+      "views": [
+        "腿部正面视角，腰部以下",
+        "腿部和臀部背面视角"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "大腿内侧接触，腿部轮廓松软",
+          "after": "轻微大腿缝，腿部线条更直"
+        },
+        "significant": {
+          "before": "粗壮的大象腿，大腿外侧马鞍肉，橘皮组织，大腿内侧广泛摩擦，臀下由于脂肪堆积形成的褶皱",
+          "after": "宽阔的大腿缝，PS般笔直的双腿，纤细模特腿，皮肤光滑，臀部提升"
+        }
+      }
+    },
+    {
+      "id": "hair_transplant",
+      "name_zh": "植发/发际线调整",
+      "name_en": "Hair Transplant",
+      "body_part": "head",
+      "description": "改善发际线后移，M型秃，加密头发",
+      "views": [
+        "额头 and 发际线的特写，正面视角",
+        "头部侧面特写，展示鬓角 and 发际线",
+        "低头视角，展示头顶发量"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "发际线轻微后移，M型发际线初期，额角头发稀疏，高额头",
+          "after": "完美自然的圆形发际线，额角填补浓密，绒毛感，额头高度适中"
+        },
+        "significant": {
+          "before": "严重脱发，地中海发型，明显的M型秃顶，头顶稀疏可见头皮，发际线极高",
+          "after": "浓密的头发，发际线显著下移，头顶发量厚实，年轻化外观，无脱发痕迹"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "发际线状况展示，手抓起头发暴露额角，清晰的脱发区域",
+          "extra_prompt": "前额头发被手向后抓起, 暴露发际线, 真实的脱发状态"
+        },
+        {
+          "id": "stage_14d",
+          "name": "🟢 术后14天 (14 Days)",
+          "description": "植发区清理血痂后，长出2-3mm短茬，毛囊存活良好",
+          "extra_prompt": "前额植发区域, 2-3毫米长的短发茬, 排列整齐的毛囊, 轻微红润的头皮, 极高清微距, 可见毛囊间隙"
+        },
+        {
+          "id": "stage_21d",
+          "name": "🟢 术后21天 (21 Days)",
+          "description": "植发区快速生长期，长出8-10mm，密度增加",
+          "extra_prompt": "植发区域头发长至8-10毫米, 尴尬期生长状态, 头发密度显著增加, 新生头发质感"
+        },
+        {
+          "id": "stage_final",
+          "name": "✨ 术后恢复 (Recovered)",
+          "description": "完全恢复，发际线自然，发量浓密",
+          "extra_prompt": "完美恢复的发际线, 浓密的头发, 自然的刘海, 看不出植发痕迹, 年轻状态"
+        }
+      ]
+    },
+    {
+      "id": "eye_bags",
+      "name_zh": "去眼袋 (Eye Bags Removal)",
+      "name_en": "Lower Eyelid Surgery",
+      "body_part": "face_eyes",
+      "description": "眼部特写，针对眼袋、泪沟与黑眼圈的改善对比。",
+      "views": [
+        "眼部特写 (Extreme Eye Closeup)",
+        "双眼正面 (Front Eyes View)",
+        "45度眼部侧写 (45-degree Eyes)",
+        "仰视眼袋 (Upward Gaze)",
+        "自然闭眼 (Closed Eyes)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "轻微眼袋, 泪沟隐约可见, 下眼睑轻度浮肿, 睡眠不足感",
+          "after": "平滑的下眼睑, 泪沟消失, 眼神明亮, 年轻化"
+        },
+        "significant": {
+          "before": "严重的脂肪型眼袋, 深陷的泪沟, 黑眼圈明显, 衰老疲惫感, 下垂的眼睑皮肤",
+          "after": "极致平整的眼周皮肤, 紧致无痕, 饱满的卧蚕 (如有), 瞬间年轻10岁"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "眼袋突出，泪沟明显",
+          "extra_prompt": "明显的脂肪型眼袋, 深陷的泪沟, 憔悴, 下眼睑浮肿, 真实的术前状态"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "术后恢复期",
+          "extra_prompt": "下眼睑轻微肿胀, 恢复期状态, 皮肤微红, 可能有医用胶布痕迹, 真实恢复过程"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "眼部平整年轻",
+          "extra_prompt": "极致平滑的下眼睑, 眼袋完全消失, 紧致的眼周皮肤, 年轻有神, 完美的术后效果"
+        }
+      ]
+    },
+    {
+      "id": "mandible_reduction",
+      "name_zh": "下颌角整形 (Mandible Angle)",
+      "name_en": "Mandibular Angle Reduction",
+      "body_part": "face_lower",
+      "description": "针对下颌角肥大、方脸，改善面部轮廓线条。",
+      "views": [
+        "侧面下颌角特写 (Side Jaw Angle)",
+        "正面下半脸 (Front Lower Face)",
+        "45度侧脸 (45-degree Jawline)",
+        "仰视下颌轮廓 (Upward Jaw View)",
+        "耳后视角 (Behind Ear View)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "轻微下颌角外翻, 脸型稍方",
+          "after": "下颌线条柔和, 鹅蛋脸初显"
+        },
+        "significant": {
+          "before": "下颌角肥大明显, 国字脸, 面部线条生硬",
+          "after": "V脸效果显著, 线条流畅极小, 精致小V脸"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "原始脸型",
+          "extra_prompt": "明显的下颌角, 方形脸轮廓, 骨骼感强"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "术后包扎/肿胀期",
+          "extra_prompt": "佩戴下颌套/弹力头套, 面部肿胀, 恢复期状态, 医用敷料"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "完全恢复",
+          "extra_prompt": "完美的小V脸, 下颌线条流畅, 骨骼感消失, 精致轮廓"
+        }
+      ]
+    },
+    {
+      "id": "zygoma_reduction",
+      "name_zh": "颧骨/颧弓内推 (Cheekbones)",
+      "name_en": "Cheekbone Reduction",
+      "body_part": "face_mid",
+      "description": "改善高颧骨、颧弓外扩，柔和面部线条。",
+      "views": [
+        "正面颧骨 (Front Cheekbone)",
+        "45度颧弓 (45-degree Zygoma)",
+        "侧面轮廓 (Side Profile)",
+        "仰视面宽 (Upward Face Width)",
+        "俯视轮廓 (High Angle)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "颧骨微突, 太阳穴轻微凹陷",
+          "after": "面部线条流畅, 饱满柔和"
+        },
+        "significant": {
+          "before": "颧骨极高, 颧弓严重外扩, 菱形脸, 显老",
+          "after": "面部宽度缩窄, 童颜感, 线条极其柔和"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "颧骨突出",
+          "extra_prompt": "高耸的颧骨, 颧弓外扩, 面颊凹陷, 菱形脸特征"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "术后肿胀/包扎",
+          "extra_prompt": "面部加压包扎, 双颊肿胀, 淤青消退中, 恢复期真实感"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "线条柔和",
+          "extra_prompt": "颧骨平整, 面部连接顺畅, 饱满年轻, 柔美轮廓"
+        }
+      ]
+    },
+    {
+      "id": "brow_ridge_augment",
+      "name_zh": "定制眉弓 (Brow Ridge)",
+      "name_en": "Brow Ridge Augmentation",
+      "body_part": "face_upper",
+      "description": "增加眉骨立体度，打造混血感或深邃眼窝。",
+      "views": [
+        "眉骨侧面 (Side Brow)",
+        "45度眼窝 (45-degree Eye Socket)",
+        "正面眉眼 (Front Brow & Eye)",
+        "半侧面 (Semi-profile)",
+        "仰视T区 (Upward T-Zone)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "眉骨平坦, 眼窝较浅",
+          "after": "眉弓微隆, 眼窝轻微深邃"
+        },
+        "significant": {
+          "before": "眉骨扁平, 面部缺乏立体感, 亚洲扁平脸",
+          "after": "高耸的眉弓, 欧美混血感, 深邃眼窝, 强烈立体感"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "扁平眉骨",
+          "extra_prompt": "眉骨低平, 缺乏立体感, 亚洲普遍特征"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "轻微肿胀/贴胶布",
+          "extra_prompt": "眉骨处医用胶布, 轻微红肿, 恢复期"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "立体眉弓",
+          "extra_prompt": "立体高眉弓, 双C线清晰, 眼神深邃, 混血感"
+        }
+      ]
+    },
+    {
+      "id": "nasal_base_augment",
+      "name_zh": "鼻基底填充 (Nasal Base)",
+      "name_en": "Nasal Base Augmentation",
+      "body_part": "face_mid",
+      "description": "改善面中部凹陷、法令纹，提升立体感。",
+      "views": [
+        "侧面鼻基底 (Side Nasal Base)",
+        "90度侧脸 (True Side Profile)",
+        "正面法令纹 (Front Nasolabial)",
+        "45度面中 (45-degree Midface)",
+        "仰视鼻孔 (Upward Nostril View)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "轻微面中凹陷, 浅法令纹",
+          "after": "面中饱满, 法令纹淡化"
+        },
+        "significant": {
+          "before": "严重面中凹陷, 月亮脸, 深法令纹, 嘴凸视觉",
+          "after": "面中部饱满立体, 侧颜完美, 贵气感, 法令纹消失"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "面中凹陷",
+          "extra_prompt": "鼻翼基底凹陷, 明显的法令纹, 面中部扁平, 苦相"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "肿胀/表情僵硬",
+          "extra_prompt": "上唇肿胀, 鼻翼两侧轻微淤青, 恢复期面部"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "饱满面中",
+          "extra_prompt": "面中部饱满前突, 侧颜立体, 甜美感, 无法令纹"
+        }
+      ]
+    },
+    {
+      "id": "nasal_synthesis",
+      "name_zh": "鼻综合 (Rhinoplasty)",
+      "name_en": "Nasal Synthesis",
+      "body_part": "face_mid",
+      "description": "综合改善鼻梁高度、鼻尖形态及鼻部整体比例。",
+      "views": [
+        "侧面鼻型 (Side Nose Profile)",
+        "正面全脸 (Front Full Face)",
+        "45度侧脸 (45-degree Face)",
+        "仰视鼻孔 (Upward Nostril)",
+        "俯视鼻尖 (High Angle Tip)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "鼻梁稍塌, 鼻尖表现点不清晰",
+          "after": "鼻梁挺拔, 鼻尖精致"
+        },
+        "significant": {
+          "before": "严重的塌鼻梁, 蒜头鼻, 朝天鼻, 鼻部形态极差, 缺乏立体感",
+          "after": "完美的直鼻/小翘鼻, 鼻尖海鸥线, 侧颜杀, 极度立体精致"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "原始鼻型",
+          "extra_prompt": "塌鼻梁, 鼻头圆钝, 鼻翼宽, 侧颜扁平, 真实的鼻部缺陷"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "鼻夹/胶布",
+          "extra_prompt": "鼻背佩戴热塑板(鼻夹), 鼻头医用胶布包裹, 面部轻微肿胀, 恢复期状态"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "精致鼻型",
+          "extra_prompt": "高挺的鼻梁, 精致小巧的鼻尖, 完美的鼻部线条, 侧颜立体, 无手术痕迹"
+        }
+      ]
+    },
+    {
+      "id": "alar_reduction",
+      "name_zh": "鼻翼缩小 (Alar Reduction)",
+      "name_en": "Alar Reduction",
+      "body_part": "face_mid",
+      "description": "针对鼻翼宽大、鼻孔外露进行改善。",
+      "views": [
+        "正面鼻翼 (Front Alar)",
+        "仰视鼻孔 (Upward Nostril View)",
+        "45度鼻基底 (45-degree Base)",
+        "侧面鼻翼 (Side Alar)",
+        "微笑鼻翼动态 (Smiling Nose)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "鼻翼轻微外扩",
+          "after": "鼻翼收拢自然"
+        },
+        "significant": {
+          "before": "鼻翼极度宽大, 鼻子占面部比例过大, 牛魔王鼻, 鼻孔外露严重",
+          "after": "鼻翼精致内收, 鼻孔形态呈水滴状, 鼻宽适度, 秀气感"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "宽鼻翼",
+          "extra_prompt": "鼻翼宽大肉厚, 鼻孔张开, 鼻基底宽, 粗犷感"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "缝线/红痕",
+          "extra_prompt": "鼻翼沟处可见细微缝线, 局部皮肤微红, 医用涂层, 恢复期"
+        },
+        {
+          "id": "stage_final",
+          "extra_prompt": "鼻翼紧致内收, 鼻孔呈标准水滴形, 鼻部底座缩小, 秀气精致, 无疤痕"
+        }
+      ]
+    },
+    {
+      "id": "chin_plasty",
+      "name_zh": "下巴整形 (Chin Augmentation)",
+      "name_en": "Genioplasty",
+      "body_part": "face_lower",
+      "description": "改善下巴后缩、短小，调整三庭比例。",
+      "views": [
+        "侧面下巴 (Side Chin)",
+        "正面下巴 (Front Chin)",
+        "45度下颌 (45-degree Chin)",
+        "仰视下巴底 (Under Chin View)",
+        "口周特写 (Mouth Area)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "下巴轻微短后缩",
+          "after": "下巴翘度适中"
+        },
+        "significant": {
+          "before": "严重下巴后缩, 没下巴, 凸嘴感",
+          "after": "完美的兜翘下巴, 面部比例协调, 侧颜杀"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "下巴后缩",
+          "extra_prompt": "短下巴, 下巴后缩, 下颚线条不连贯"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "贴固定胶布",
+          "extra_prompt": "下巴固定胶布, 肿胀的下巴, 淤青, 恢复期"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "精致翘下巴",
+          "extra_prompt": "精致的翘下巴, 完美侧颜E线, 轮廓清晰"
+        }
+      ]
+    },
+    {
+      "id": "forehead_augment",
+      "name_zh": "丰额头 (Forehead)",
+      "name_en": "Forehead Augmentation",
+      "body_part": "face_upper",
+      "description": "改善额头扁平、凹陷，增加饱满度。",
+      "views": [
+        "侧面额头 (Side Forehead)",
+        "45度额头 (45-degree Forehead)",
+        "正面额头 (Front Forehead)",
+        "发际线边缘 (Hairline Edge)",
+        "半侧面轮廓 (Semi-profile)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "额头轻微扁平",
+          "after": "额头圆润适度"
+        },
+        "significant": {
+          "before": "额头严重后倾, 眉骨突出显凶, 凹凸不平",
+          "after": "饱满圆润的额头, 寿星额(适度), 甜美童颜感, 侧面弧度完美"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "扁平额头",
+          "extra_prompt": "额头扁平后倾, 缺乏弧度, 面部硬朗"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "额头肿胀/包扎",
+          "extra_prompt": "额头缠绕纱布/绷带, 肿胀发亮, 恢复期"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "饱满圆润",
+          "extra_prompt": "饱满圆润的额头, 完美C型弧度, 皮肤光滑, 减龄"
+        }
+      ]
+    },
+    {
+      "id": "face_lift",
+      "name_zh": "面部提升/大拉皮 (Face Lift)",
+      "name_en": "Surgical Face Lift",
+      "body_part": "face_full",
+      "description": "针对面部松弛下垂、法令纹、木偶纹的全面部年轻化手术。",
+      "views": [
+        "侧面耳前切口 (Side Ear Incision)",
+        "正面全脸 (Front Full Face)",
+        "45度提升 (45-degree Lift)",
+        "下颌缘线条 (Jawline Clean)",
+        "颈部视角 (Neck Lift View)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "轻微面部松弛, 苹果肌下移",
+          "after": "面部紧致, 苹果肌复位"
+        },
+        "significant": {
+          "before": "严重面部松弛下垂, 明显的法令纹木偶纹, 下颌缘模糊, 衰老感强",
+          "after": "极致紧致, 逆龄20岁, 轮廓清晰上扬, 无皱纹, 皮肤紧绷"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "stage_0",
+          "name": "🔴 术前 (Pre-op)",
+          "description": "松弛下垂",
+          "extra_prompt": "面部皮肤松弛, 赘肉下垂, 深刻皱纹, 衰老"
+        },
+        {
+          "id": "stage_recovery",
+          "name": "🟡 康复中 (Recovery)",
+          "description": "耳前包扎/引流",
+          "extra_prompt": "耳前切口缝线, 全脸弹力头套包裹, 肿胀淤青, 恢复期真实感"
+        },
+        {
+          "id": "stage_final",
+          "name": "🟢 术后 (Post-op)",
+          "description": "紧致逆龄",
+          "extra_prompt": "极致紧致的面部, 光滑无痕, 提升的轮廓, 看起来非常年轻"
+        }
+      ]
+    }
+  ],
+  "clothing_options": [
+    {
+      "id": "ref_only",
+      "name": "🔴 仅参考底图 (不指定服装)",
+      "prompt": "穿着日常舒适的衣服",
+      "suitable_for": [
+        "rich_hump",
+        "jawline_chin",
+        "breast_augment",
+        "breast_reduction",
+        "lipo_abdomen",
+        "lipo_thigh",
+        "hair_transplant",
+        "nasal_synthesis",
+        "alar_reduction",
+        "nasal_base_augment"
+      ]
+    },
+    {
+      "id": "shirtless",
+      "name": "🔴 赤膊/无上衣 (Bare Upper Body)",
+      "prompt": "赤膊, 裸露上身, 无上衣, 皮肤直接暴露",
+      "suitable_for": [
+        "lipo_abdomen",
+        "rich_hump"
+      ]
+    },
+    {
+      "id": "yoga_set",
+      "name": "紧身瑜伽套装",
+      "prompt": "穿着紧身配套瑜伽服，专业运动上衣 and 紧身裤，面料勾勒曲线",
+      "suitable_for": [
+        "lipo_abdomen",
+        "lipo_thigh",
+        "rich_hump",
+        "breast_augment",
+        "breast_reduction"
+      ]
+    },
+    {
+      "id": "corset_shaper",
+      "name": "专业塑身支持",
+      "prompt": "穿着专业塑身衣，腰部支撑带，突出腰线",
+      "suitable_for": [
+        "lipo_abdomen",
+        "breast_augment",
+        "breast_reduction"
+      ]
+    },
+    {
+      "id": "bikini",
+      "name": "分体式泳衣",
+      "prompt": "穿着运动型分体泳衣，展示身体线条",
+      "suitable_for": [
+        "lipo_abdomen",
+        "lipo_thigh",
+        "breast_augment",
+        "breast_reduction"
+      ]
+    },
+    {
+      "id": "lifted_shirt",
+      "name": "掀起T恤 (自己)",
+      "prompt": "穿着白色T恤，双手掀起衣服以露出研究区域，手抓着衣服下摆",
+      "suitable_for": [
+        "lipo_abdomen",
+        "breast_augment",
+        "breast_reduction"
+      ]
+    },
+    {
+      "id": "lifted_shirt_doctor",
+      "name": "掀起T恤 (研究辅助)",
+      "prompt": "穿着白色T恤，被戴手套的专业人员双手掀起，可见双手调整衣物",
+      "suitable_for": [
+        "lipo_abdomen",
+        "breast_augment",
+        "breast_reduction"
+      ]
+    },
+    {
+      "id": "medical_compression",
+      "name": "专业加压塑身衣",
+      "prompt": "穿着米色专业研究用术后加压塑身衣，外科束身衣风格",
+      "suitable_for": [
+        "lipo_abdomen",
+        "lipo_thigh"
+      ]
+    },
+    {
+      "id": "sports_vest",
+      "name": "运动背心",
+      "prompt": "穿着专业运动背心，露脐装，展示腹部线条",
+      "suitable_for": [
+        "lipo_abdomen",
+        "rich_hump"
+      ]
+    },
+    {
+      "suitable_for": [
+        "rich_hump",
+        "breast_augment",
+        "breast_reduction",
+        "lipo_thigh",
+        "nasal_synthesis",
+        "alar_reduction",
+        "nasal_base_augment"
+      ]
+    },
+    {
+      "id": "silk_robe",
+      "name": "丝绸晨袍",
+      "prompt": "穿着宽松的丝绸晨袍，腰带系在腰间，自然垂坠",
+      "suitable_for": [
+        "breast_augment",
+        "breast_reduction",
+        "lipo_thigh"
+      ]
+    },
+    {
+      "id": "medical_gown",
+      "name": "标准研究服",
+      "prompt": "穿着标准蓝色医院对比研究服装，宽松舒适",
+      "suitable_for": [
+        "rich_hump",
+        "lipo_abdomen",
+        "lipo_thigh",
+        "breast_augment",
+        "breast_reduction",
+        "hair_transplant",
+        "nasal_synthesis",
+        "alar_reduction",
+        "nasal_base_augment"
+      ]
+    },
+    {
+      "id": "underwear_cotton",
+      "name": "基础棉质打底",
+      "prompt": "穿着基础款白色棉质打底衣，自然真实风格",
+      "suitable_for": [
+        "lipo_abdomen",
+        "lipo_thigh",
+        "breast_augment",
+        "breast_reduction"
+      ]
+    },
+    {
+      "id": "custom",
+      "name": "✏️ 自定义服装 (Custom)",
+      "prompt": ""
+    }
+  ],
+  "demographics": {
+    "genders": [
+      {
+        "id": "female",
+        "name": "女性",
+        "prompt": "女性"
+      },
+      {
+        "id": "male",
+        "name": "男性",
+        "prompt": "男性"
+      }
+    ],
+    "skin_tones": [
+      {
+        "id": "asian",
+        "name": "黄种人 (Asian)",
+        "prompt": "亚洲人肤色，黄种人，自然肤色"
+      },
+      {
+        "id": "caucasian",
+        "name": "白种人 (Caucasian)",
+        "prompt": "高加索人肤色，白种人，自然肤理"
+      },
+      {
+        "id": "black",
+        "name": "黑人 (Black)",
+        "prompt": "深色皮肤，黑人，丰富的黑色素"
+      }
+    ],
+    "body_types": [
+      {
+        "id": "thin",
+        "name": "偏瘦",
+        "prompt": "非常纤细苗条的体型，时尚模特身材"
+      },
+      {
+        "id": "average",
+        "name": "匀称",
+        "prompt": "平均健康体型，自然身材"
+      },
+      {
+        "id": "curvy",
+        "name": "丰满/强壮",
+        "prompt": "丰满沙漏型身材(女) / 肌肉强壮身材(男)"
+      },
+      {
+        "id": "plus",
+        "name": "大码 (Plus)",
+        "prompt": "大码微胖体型，柔软脂肪"
+      }
+    ],
+    "ages": [
+      {
+        "id": "20s",
+        "name": "20多岁 (青年)",
+        "prompt": "年轻成年人，20岁左右"
+      },
+      {
+        "id": "30s",
+        "name": "30多岁 (轻熟)",
+        "prompt": "30多岁的成年人"
+      },
+      {
+        "id": "40s",
+        "name": "40多岁 (中年)",
+        "prompt": "中年人，40多岁"
+      },
+      {
+        "id": "50s",
+        "name": "50多岁 (中老年)",
+        "prompt": "50多岁的中老年人, 明显的成熟痕迹, 皮肤松弛, 真实的年龄感"
+      }
+    ]
+  },
+  "background_options": [
+    {
+      "id": "original",
+      "name": "🖼️ 跟随底图/原图背景",
+      "prompt": ""
+    },
+    {
+      "id": "white",
+      "name": "⚪ 纯白背景 (White)",
+      "prompt": "纯白色背景, 极简背景, 专业对比摄影风格, 干净的背景, 无干扰"
+    },
+    {
+      "id": "grey",
+      "name": "🔘 纯灰背景 (Grey)",
+      "prompt": "纯灰色背景, 专业影棚背景, 中性色背景, 均匀的布光"
+    },
+    {
+      "id": "black",
+      "name": "⚫ 纯黑背景 (Black)",
+      "prompt": "纯黑色背景, 戏剧性光影, 黑色幕布, 突出主体"
+    }
+  ]
+}
