@@ -522,9 +522,12 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   <div v-for="(item, idx) in stage.prompts" :key="item.id" class="card bg-base-200 shadow-sm border border-base-300">
                     <div class="card-body p-3">
                       <span class="text-xs font-bold opacity-50">#{{ idx + 1 }}</span>
-                      <div class="bg-base-300 rounded-lg p-3 text-xs text-center flex flex-col items-center justify-center gap-1 min-h-[60px]">
-                        <span class="font-bold text-base-content/70">变体 #{{ idx + 1 }}</span>
-                        <span class="text-base-content/40">{{ stage.name }}</span>
+                      <div class="bg-base-300 rounded-lg p-3 text-xs flex flex-col gap-1 min-h-[60px]">
+                        <div class="flex flex-wrap gap-1">
+                          <span class="badge badge-outline badge-xs">变体 #{{ idx + 1 }}</span>
+                          <span v-if="item.meta?.pose" class="badge badge-ghost badge-xs">{{ item.meta.pose }}</span>
+                          <span v-if="item.meta?.light" class="badge badge-ghost badge-xs">{{ item.meta.light }}</span>
+                        </div>
                       </div>
                       <button class="btn btn-xs btn-primary w-full gap-1"
                         :disabled="generatingMap[item.id]"
@@ -566,9 +569,14 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   class="card bg-base-100 shadow-md border-l-4 border-warning">
                   <div class="card-body p-4">
                     <span class="badge badge-warning badge-outline">图片 {{ idx + 1 }}</span>
-                    <div class="bg-base-200 rounded-lg p-3 text-xs text-center flex flex-col items-center justify-center gap-1 min-h-[60px] mt-2">
-                      <span class="font-bold text-warning/80">术前 · 变体 #{{ idx + 1 }}</span>
-                      <span class="text-base-content/40">AI 参数已就绪</span>
+                    <div class="bg-base-200 rounded-lg p-3 text-xs flex flex-col gap-1 mt-2">
+                      <div class="flex flex-wrap gap-1">
+                        <span class="badge badge-warning badge-outline badge-xs">术前 · 变体 #{{ idx + 1 }}</span>
+                        <span v-if="item.meta?.view" class="badge badge-ghost badge-xs">{{ item.meta.view.split('(')[0].trim() }}</span>
+                        <span v-if="item.meta?.pose" class="badge badge-ghost badge-xs">{{ item.meta.pose }}</span>
+                        <span v-if="item.meta?.light" class="badge badge-ghost badge-xs">{{ item.meta.light }}</span>
+                      </div>
+                      <div v-if="item.meta?.feature" class="text-base-content/50 mt-1 leading-snug">{{ item.meta.feature }}</div>
                     </div>
                     <button class="btn btn-sm btn-warning w-full gap-2 mt-2"
                       :disabled="generatingMap[item.id]"
@@ -610,9 +618,14 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   class="card bg-base-100 shadow-md border-l-4 border-success">
                   <div class="card-body p-4">
                     <span class="badge badge-success badge-outline">图片 {{ idx + 1 }}</span>
-                    <div class="bg-base-200 rounded-lg p-3 text-xs text-center flex flex-col items-center justify-center gap-1 min-h-[60px] mt-2">
-                      <span class="font-bold text-success/80">术后 · 变体 #{{ idx + 1 }}</span>
-                      <span class="text-base-content/40">AI 参数已就绪</span>
+                    <div class="bg-base-200 rounded-lg p-3 text-xs flex flex-col gap-1 mt-2">
+                      <div class="flex flex-wrap gap-1">
+                        <span class="badge badge-success badge-outline badge-xs">术后 · 变体 #{{ idx + 1 }}</span>
+                        <span v-if="item.meta?.view" class="badge badge-ghost badge-xs">{{ item.meta.view.split('(')[0].trim() }}</span>
+                        <span v-if="item.meta?.pose" class="badge badge-ghost badge-xs">{{ item.meta.pose }}</span>
+                        <span v-if="item.meta?.light" class="badge badge-ghost badge-xs">{{ item.meta.light }}</span>
+                      </div>
+                      <div v-if="item.meta?.feature" class="text-base-content/50 mt-1 leading-snug">{{ item.meta.feature }}</div>
                     </div>
                     <button class="btn btn-sm btn-success w-full gap-2 mt-2"
                       :disabled="generatingMap[item.id]"

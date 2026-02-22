@@ -121,7 +121,11 @@ export function generatePromptSet(inputParams) {
           currentFooter
         ].join(", ");
 
-        stagePrompts.push({ id: `${stage.id}_${i}`, prompt: promptText });
+        stagePrompts.push({
+          id: `${stage.id}_${i}`,
+          prompt: promptText,
+          meta: { pose, light: light || '参考图光线' }
+        });
       }
       result.timelineStages.push({
         id: stage.id,
@@ -225,8 +229,16 @@ export function generatePromptSet(inputParams) {
         currentFooter
       ].join(", ");
 
-      result.beforePrompts.push({ id: `b_${i}`, prompt: promptBefore });
-      result.afterPrompts.push({ id: `a_${i}`, prompt: promptAfter });
+      result.beforePrompts.push({
+        id: `b_${i}`,
+        prompt: promptBefore,
+        meta: { view, pose, light: light || '参考图光线', feature: beforeFeature }
+      });
+      result.afterPrompts.push({
+        id: `a_${i}`,
+        prompt: promptAfter,
+        meta: { view, pose, light: light || '参考图光线', feature: afterFeature }
+      });
       result.negativePrompt = currentNegative; // Add negative prompt to result for logging/API
     }
   }
