@@ -522,7 +522,10 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   <div v-for="(item, idx) in stage.prompts" :key="item.id" class="card bg-base-200 shadow-sm border border-base-300">
                     <div class="card-body p-3">
                       <span class="text-xs font-bold opacity-50">#{{ idx + 1 }}</span>
-                      <textarea class="textarea textarea-bordered text-xs h-40 w-full font-mono leading-tight" v-model="item.prompt"></textarea>
+                      <div class="bg-base-300 rounded-lg p-3 text-xs text-center flex flex-col items-center justify-center gap-1 min-h-[60px]">
+                        <span class="font-bold text-base-content/70">变体 #{{ idx + 1 }}</span>
+                        <span class="text-base-content/40">{{ stage.name }}</span>
+                      </div>
                       <button class="btn btn-xs btn-primary w-full gap-1"
                         :disabled="generatingMap[item.id]"
                         @click="generateImage(item.id, item.prompt, stage.id)">
@@ -563,7 +566,10 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   class="card bg-base-100 shadow-md border-l-4 border-warning">
                   <div class="card-body p-4">
                     <span class="badge badge-warning badge-outline">图片 {{ idx + 1 }}</span>
-                    <textarea class="textarea textarea-bordered text-xs h-40 w-full font-mono leading-tight mt-2" v-model="item.prompt"></textarea>
+                    <div class="bg-base-200 rounded-lg p-3 text-xs text-center flex flex-col items-center justify-center gap-1 min-h-[60px] mt-2">
+                      <span class="font-bold text-warning/80">术前 · 变体 #{{ idx + 1 }}</span>
+                      <span class="text-base-content/40">AI 参数已就绪</span>
+                    </div>
                     <button class="btn btn-sm btn-warning w-full gap-2 mt-2"
                       :disabled="generatingMap[item.id]"
                       @click="generateImage(item.id, item.prompt, 'BEFORE')">
@@ -604,7 +610,10 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   class="card bg-base-100 shadow-md border-l-4 border-success">
                   <div class="card-body p-4">
                     <span class="badge badge-success badge-outline">图片 {{ idx + 1 }}</span>
-                    <textarea class="textarea textarea-bordered text-xs h-40 w-full font-mono leading-tight mt-2" v-model="item.prompt"></textarea>
+                    <div class="bg-base-200 rounded-lg p-3 text-xs text-center flex flex-col items-center justify-center gap-1 min-h-[60px] mt-2">
+                      <span class="font-bold text-success/80">术后 · 变体 #{{ idx + 1 }}</span>
+                      <span class="text-base-content/40">AI 参数已就绪</span>
+                    </div>
                     <button class="btn btn-sm btn-success w-full gap-2 mt-2"
                       :disabled="generatingMap[item.id]"
                       @click="generateImage(item.id, item.prompt, 'AFTER')">
