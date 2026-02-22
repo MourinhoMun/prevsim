@@ -5,57 +5,65 @@
         <h1 class="text-2xl font-bold text-primary text-center mb-1">PreVSim</h1>
         <p class="text-center text-base-content/60 text-sm mb-6">术前效果模拟系统 · 医患沟通辅助工具</p>
 
-        <div class="form-control">
-          <label class="label"><span class="label-text font-bold">激活码 / 充值码</span></label>
-          <input
-            class="input input-bordered"
-            v-model="code"
-            placeholder="请输入激活码，如：A3B2-XYZW-4F9P-2Q8R"
-            @keyup.enter="handleActivate"
-          />
+        <div v-if="checking" class="flex flex-col items-center py-6 gap-3">
+          <span class="loading loading-spinner loading-md text-primary"></span>
+          <p class="text-sm text-base-content/60">正在验证登录状态...</p>
         </div>
 
-        <button class="btn btn-primary w-full mt-4" :disabled="loading" @click="handleActivate">
-          <span v-if="loading" class="loading loading-spinner loading-sm"></span>
-          {{ loading ? '激活中...' : '激活' }}
-        </button>
+        <template v-else>
+          <div class="form-control">
+            <label class="label"><span class="label-text font-bold">激活码</span></label>
+            <input
+              class="input input-bordered"
+              v-model="code"
+              placeholder="请输入年卡激活码"
+              @keyup.enter="handleActivate"
+              autofocus
+            />
+          </div>
 
-        <div v-if="error" class="alert alert-error mt-3 text-sm">{{ error }}</div>
+          <button class="btn btn-primary w-full mt-4" :disabled="loading" @click="handleActivate">
+            <span v-if="loading" class="loading loading-spinner loading-sm"></span>
+            {{ loading ? '激活中...' : '激活' }}
+          </button>
 
-        <div class="divider"></div>
-        <p class="text-center text-sm text-base-content/60">
-          如需获取激活码，请添加鹏哥微信：<span class="font-bold text-primary">peng_ip</span>
-        </p>
+          <div v-if="error" class="alert alert-error mt-3 text-sm">{{ error }}</div>
+
+          <div class="divider"></div>
+          <p class="text-center text-sm text-base-content/60">
+            请先在 <span class="font-bold text-primary">pengip.com</span> 购买年卡获取激活码
+          </p>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { activate } from '../services/api';
+import { ref, onMounted } from 'vue';
+import { activate, autoLogin } from '../services/api';
 
 const emit = defineEmits(['activated']);
 const code = ref('');
 const loading = ref(false);
+const checking = ref(true);
 const error = ref('');
 
-function getDeviceId() {
-  let id = localStorage.getItem('prevsim_device_id');
-  if (!id) {
-    id = crypto.randomUUID();
-    localStorage.setItem('prevsim_device_id', id);
+onMounted(async () => {
+  const user = await autoLogin();
+  if (user) {
+    emit('activated', user.balance);
   }
-  return id;
-}
+  checking.value = false;
+});
 
 async function handleActivate() {
   if (!code.value.trim()) return;
   loading.value = true;
   error.value = '';
   try {
-    const data = await activate(code.value.trim(), getDeviceId());
-    emit('activated', data.user.balance);
+    const data = await activate(code.value.trim());
+    emit('activated', data.user?.balance ?? 0);
   } catch (e) {
     error.value = e.message;
   } finally {

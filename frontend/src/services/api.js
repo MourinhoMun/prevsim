@@ -2,7 +2,7 @@
 const BASE = import.meta.env.VITE_API_BASE || '/api';
 
 function getAuthHeaders() {
-  const token = localStorage.getItem('prevsim_token');
+  const token = localStorage.getItem('pengip_token');
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {})
@@ -12,25 +12,54 @@ function getAuthHeaders() {
 async function handleResponse(res) {
   const data = await res.json();
   if (res.status === 401 || res.status === 403) {
-    localStorage.removeItem('prevsim_token');
+    localStorage.removeItem('pengip_token');
     window.dispatchEvent(new Event('auth:logout'));
-    throw new Error('登录已过期，请重新激活');
+    throw new Error('登录已过期，请重新登录');
   }
   if (res.status === 402) throw Object.assign(new Error('积分不足，请充值'), { code: 402, balance: data.balance });
   if (!res.ok) throw new Error(data.error || '请求失败');
   return data;
 }
 
-// 激活 / 充值
-export async function activate(code, deviceId) {
+// 静默复用 pengip.com 网页登录态（同域，cookie 自动携带）
+export async function autoLogin() {
+  try {
+    const res = await fetch('/api/v1/user/token');
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.token) {
+      localStorage.setItem('pengip_token', data.token);
+      return data.user;
+    }
+  } catch {}
+  return null;
+}
+
+// 激活码登录（同 healvision 逻辑）
+export async function activate(code) {
+  let deviceId = localStorage.getItem('pengip_device_id');
+  if (!deviceId) {
+    deviceId = crypto.randomUUID();
+    localStorage.setItem('pengip_device_id', deviceId);
+  }
   const res = await fetch(`${BASE}/license/activate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code, deviceId })
   });
   const data = await handleResponse(res);
-  if (data.token) localStorage.setItem('prevsim_token', data.token);
+  if (data.token) localStorage.setItem('pengip_token', data.token);
   return data;
+}
+
+// 充值码激活
+export async function recharge(code) {
+  const res = await fetch(`${BASE}/license/recharge`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ code })
+  });
+  return handleResponse(res);
 }
 
 // 查余额

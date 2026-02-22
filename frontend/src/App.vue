@@ -1,15 +1,16 @@
 <script setup>
 import { ref, computed, watch, onMounted, triggerRef } from "vue";
 import { generatePromptSet } from "./logic/prompt_builder";
-import { generateImageAPI, generateTextAPI, getBalance } from "./services/api";
+import { generateImageAPI, generateTextAPI, getBalance, autoLogin } from "./services/api";
 import CONFIG from "./data/projects_config.json";
 import { Wand2, Image as ImageIcon, Download, Settings, Upload, Sparkles, History as HistoryIcon, Trash2 } from "lucide-vue-next";
 import ActivatePage from "./components/ActivatePage.vue";
+import RechargePage from "./components/RechargePage.vue";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 
 // ── 授权状态
-const isActivated = ref(!!localStorage.getItem('prevsim_token'));
+const isActivated = ref(!!localStorage.getItem('pengip_token'));
 const balance = ref(0);
 const showRecharge = ref(false);
 
@@ -18,7 +19,8 @@ async function refreshBalance() {
   catch (e) { if (e.message.includes('过期') || e.message.includes('激活')) isActivated.value = false; }
 }
 function onActivated(newBalance) { isActivated.value = true; balance.value = newBalance; showRecharge.value = false; }
-function logout() { localStorage.removeItem('prevsim_token'); isActivated.value = false; }
+function onRecharged(newBalance) { balance.value = newBalance; showRecharge.value = false; }
+function logout() { localStorage.removeItem('pengip_token'); isActivated.value = false; }
 window.addEventListener('auth:logout', () => { isActivated.value = false; });
 
 // ── 主功能状态
@@ -57,10 +59,19 @@ const availableClothing = computed(() =>
   CONFIG.clothing_options.filter(c => !c.suitable_for || c.suitable_for.includes(selectedProject.value))
 );
 
-onMounted(() => {
+onMounted(async () => {
   const saved = localStorage.getItem('prevsim_history');
   if (saved) { try { historyList.value = JSON.parse(saved); } catch (e) {} }
-  if (isActivated.value) refreshBalance();
+  if (isActivated.value) {
+    refreshBalance();
+  } else {
+    // 未登录时，尝试静默复用 pengip.com 网页登录态
+    const user = await autoLogin();
+    if (user) {
+      isActivated.value = true;
+      balance.value = user.balance;
+    }
+  }
 });
 
 watch(historyList, v => localStorage.setItem('prevsim_history', JSON.stringify(v)), { deep: true });
@@ -238,7 +249,7 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
       <div class="modal-box max-w-md">
         <h3 class="font-bold text-lg text-error mb-2">积分不足</h3>
         <p class="text-sm text-base-content/70 mb-4">如需购买充值码，请添加鹏哥微信：<span class="font-bold text-primary">peng_ip</span></p>
-        <ActivatePage @activated="onActivated" />
+        <RechargePage @recharged="onRecharged" />
         <div class="modal-action mt-0">
           <button class="btn btn-sm btn-ghost" @click="showRecharge = false">关闭</button>
         </div>

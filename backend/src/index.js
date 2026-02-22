@@ -15,7 +15,7 @@ const YUNWU_URL = process.env.YUNWU_BASE_URL || 'https://yunwu.ai';
 function licenseCheck(software, cost) {
   return async (req, res, next) => {
     const token = req.headers.authorization;
-    if (!token) return res.status(401).json({ error: '请先激活软件' });
+    if (!token) return res.status(401).json({ error: '请先登录' });
 
     try {
       // 查余额
@@ -23,7 +23,7 @@ function licenseCheck(software, cost) {
         headers: { Authorization: token }
       });
       if (balRes.status === 401 || balRes.status === 403) {
-        return res.status(403).json({ error: 'Token 已过期，请重新激活' });
+        return res.status(403).json({ error: 'Token 已过期，请重新登录' });
       }
       const { balance } = await balRes.json();
       if (balance < cost) {
@@ -50,12 +50,29 @@ function licenseCheck(software, cost) {
   };
 }
 
-// ── 激活 / 充值（透传） ───────────────────────────────────────
+// ── 激活码登录（透传，同 healvision 逻辑） ───────────────────
 app.post('/api/license/activate', async (req, res) => {
   try {
     const r = await fetch(`${LICENSE_URL}/api/v1/user/activate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req.body)
+    });
+    res.status(r.status).json(await r.json());
+  } catch (e) {
+    res.status(500).json({ error: '授权服务器连接失败' });
+  }
+});
+
+// ── 充值码激活（透传，需 Bearer token） ───────────────────────
+app.post('/api/license/recharge', async (req, res) => {
+  try {
+    const r = await fetch(`${LICENSE_URL}/api/v1/user/recharge`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: req.headers.authorization || ''
+      },
       body: JSON.stringify(req.body)
     });
     res.status(r.status).json(await r.json());
