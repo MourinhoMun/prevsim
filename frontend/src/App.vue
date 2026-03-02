@@ -434,6 +434,14 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
             <div class="alert alert-warning mb-2 py-2 px-3 text-sm rounded-lg">
               <span>⚠️ <strong>重要提示：</strong>必须上传素人底图，否则 AI 会随机生成陌生人的脸，而不是素人本人。</span>
             </div>
+            <div class="alert alert-info mb-2 py-2 px-3 text-sm rounded-lg">
+              <span>💡 <strong>效果建议：</strong>
+                <ul class="list-disc list-inside mt-2 text-xs">
+                  <li><strong>不要人脸</strong>的项目效果最好，最真实（如体型、胸部等）</li>
+                  <li>需要包含人脸的项目，<strong>尽量上传垫底图</strong>（穿衣照片）并<strong>勾选"锁定人脸"</strong>，确保效果一致</li>
+                </ul>
+              </span>
+            </div>
             <div class="space-y-4">
               <div class="form-control w-full">
                 <label class="label"><span class="label-text font-bold text-warning">1. 术前参考图（可选）</span></label>
@@ -495,11 +503,14 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
               <label class="cursor-pointer label">
                 <div class="flex items-center gap-2">
                   <span class="text-base">🔒</span>
-                  <span class="label-text font-bold text-blue-700 dark:text-blue-400">锁定人物</span>
+                  <span class="label-text font-bold text-blue-700 dark:text-blue-400">锁定人脸</span>
                 </div>
                 <input type="checkbox" class="toggle toggle-info toggle-sm" v-model="lockPerson"/>
               </label>
-              <p class="text-[10px] text-base-content/60 px-1 mt-1">开启后 AI 将严格保持参考图中人物的五官特征，确保生成结果是同一个人。默认开启。</p>
+              <p class="text-[10px] text-base-content/60 px-1 mt-1">
+                <strong>需要生成含人脸的结果时必须勾选。</strong>开启后 AI 将严格保持参考图中人物的五官特征，确保生成结果是同一个人。
+                <span v-if="!isFacialProject">如果项目不涉及人脸（如体型、胸部等），可不勾选以获得更自然的效果。</span>
+              </p>
             </div>
 
             <!-- 生成按钮 -->
