@@ -1,46 +1,46 @@
 
 import CONFIG from '../data/projects_config.json';
 
-// Updated: Realism & iPhone Style (Targeting: 2k, Raw, Imperfect)
-// Updated: Realism & iPhone Style (Targeting: 2k, Raw, Imperfect)
-const PROMPT_HEADER = "iPhone摄影风格, (全屏画面:1.5), 原始照片, 未经修饰, 真实的皮肤质感, 可见的毛孔, (皮肤微瑕疵:0.7), 业余摄影风格, 真实感强于完美, (聚焦主体:1.4), ";
-const PROMPT_FOOTER = ", (真实生活背景:1.1), 手机摄影, 4:3 画面比例";
+// v3: 1K output, refined prompt engineering, skin texture, pose diversity, person lock
+const PROMPT_HEADER = "(1024x1024高清输出:1.5), (RAW照片质感:1.4), 真实手机摄影风格, (未经修饰的真实皮肤:1.5), (可见毛孔细节:1.3), (皮肤纹理清晰:1.4), (轻微皮肤瑕疵保留:0.8), (自然肤色过渡:1.2), 非商业摄影风格, 生活记录感, (主体清晰锐利:1.5), (背景自然虚化:1.2), ";
+const PROMPT_FOOTER = ", 手机竖拍, 3:4画面比例, 1024px短边";
 
-// Negative Prompt
-const NEGATIVE_PROMPT = "手机外框, 手机屏幕, 拿着手机, 手机界面, 边框, 相框, 文本, 水印, 模糊, 畸变, 脸, 眼睛, 嘴巴, 鼻子, 头部, 身份特征, 完美皮肤, 磨皮, 美颜, 滤镜, 电影灯光, 影棚光, 绘画, cgi, 3d渲染, 假人, 光滑皮肤, 特效";
+// Negative Prompt — 精细化
+const NEGATIVE_PROMPT = "低分辨率, 模糊, 噪点过多, 过度锐化, 手机外框, 手机屏幕, 边框, 相框, 文字水印, logo, 畸变变形, 完美无瑕皮肤, 过度磨皮, 美颜滤镜, AI感, 塑料感皮肤, 蜡像感, 电影级布光, 影棚灯光, 绘画风格, cgi渲染, 3d建模, 假人模特, 特效合成, 过饱和色彩, HDR过度处理";
 
-// Variation Pools (Realism/Casual)
+// 姿势变体 — 更丰富真实的日常动作
 const POSE_VARIATIONS = [
-  "自然放松站立",
-  "稍微侧身",
-  "随意的姿势",
-  "一只手叉腰",
-  "在家自拍的姿势",
-  "对着镜子自拍 (不露脸)",
-  "身体略微前倾",
-  "双手整理衣服",
-  "直立",
-  "重心偏移"
+  "自然站立, 双手自然垂放, 重心均匀",
+  "单手叉腰, 身体微微侧转, 放松姿态",
+  "双手轻握放在腹前, 微微低头",
+  "靠墙站立, 一脚微微抬起, 随意放松",
+  "身体略微前倾, 双手撑在桌边",
+  "转身四分之三角度, 回头看镜头",
+  "双臂交叉抱胸, 自然站立",
+  "一手扶着头发, 侧身站立",
+  "走路中途停下的自然姿态, 步伐感",
+  "坐在椅子边缘, 身体挺直, 双手放膝上"
 ];
 
+// 光线变体 — 更精准的真实光线描述
 const LIGHTING_VARIATIONS = [
-  "室内自然光",
-  "窗边的日光",
-  "卧室顶灯",
-  "卫生间镜前灯",
-  "手机闪光灯直射", // Flash is very "real"
-  "阴天柔光",
-  "家庭环境光",
-  "普通的房间照明",
-  "明亮的日光灯",
-  "早晨的自然光线"
+  "窗边柔和自然侧光, 皮肤质感清晰",
+  "室内顶灯直射, 轻微阴影, 真实家居感",
+  "卫生间镜前灯, 正面均匀补光",
+  "手机闪光灯直射, 轻微过曝, 真实自拍感",
+  "阴天室外漫射光, 柔和无阴影",
+  "早晨窗边暖色自然光, 皮肤暖调",
+  "傍晚室内暖黄灯光, 温暖氛围",
+  "办公室日光灯, 冷白光, 均匀照射",
+  "商场室内混合光源, 自然真实",
+  "户外树荫下散射光, 柔和自然"
 ];
 
 /**
  * Main function to generate the 20 prompts
  */
 export function generatePromptSet(inputParams) {
-  const { projectId, severity, clothingId, customClothingPrompt, skinId, bodyId, ageId, genderId, faceStyle, styleVariations, viewScope } = inputParams;
+  const { projectId, severity, clothingId, customClothingPrompt, skinId, bodyId, ageId, genderId, faceStyle, styleVariations, viewScope, lockPerson } = inputParams;
 
   // 1. Get Project Config
   const project = CONFIG.projects.find(p => p.id === projectId);
@@ -67,6 +67,22 @@ export function generatePromptSet(inputParams) {
 
   // 3. Assemble the "Locked" Subject Identity (Added Gender)
   const identityBlock = `${age}, ${gender}, ${skin}, ${body}, ${clothing}`;
+
+  // 锁定人物：精细化提示词工程，把参考图人物特征逐项锁定
+  const lockBlock = lockPerson !== false
+    ? [
+        "(与参考图为同一个人:2.0)",
+        "(严格保持参考图人物的面部特征:1.9)",
+        "(相同的脸型轮廓:1.7)",
+        "(相同的眼睛形状和间距:1.6)",
+        "(相同的鼻梁高度和鼻翼宽度:1.6)",
+        "(相同的嘴唇厚度和形状:1.5)",
+        "(相同的肤色和皮肤质感:1.6)",
+        "(保留参考图中可见的皮肤细节和特征:1.4)",
+        "(人物身份不变:1.8)",
+        "不换脸, 不改变人物身份"
+      ].join(", ") + ", "
+    : ``;
 
   // 4. Get Project Specific Feature Descriptions
   const beforeFeature = project.severity_levels[severity].before;
@@ -97,11 +113,11 @@ export function generatePromptSet(inputParams) {
         let currentHeader = "";
 
         if (projectId === 'hair_transplant') {
-          currentHeader = "(特写:1.4), (手抓起头发:1.5), (暴露前额:1.5), " + PROMPT_HEADER;
+          currentHeader = "(1024x1024:1.5), (手抓起头发暴露发际线:1.6), (前额特写:1.5), (头皮毛囊细节清晰:1.4), " + PROMPT_HEADER;
         } else if (['nasal_synthesis', 'alar_reduction', 'nasal_base_augment', 'eye_bags', 'chin_plasty', 'mandible_reduction', 'zygoma_reduction', 'brow_ridge_augment', 'face_lift', 'forehead_augment'].includes(projectId)) {
-          currentHeader = "(面部特写:1.5), (极高清细节:1.3), " + PROMPT_HEADER;
+          currentHeader = "(1024x1024:1.5), (面部特写:1.6), (五官细节极清晰:1.5), (皮肤纹理毛孔可见:1.4), (自然面部光影:1.3), " + PROMPT_HEADER;
         } else {
-          currentHeader = "(特写:1.3), " + PROMPT_HEADER;
+          currentHeader = "(1024x1024:1.5), (身体部位特写:1.4), (皮肤质感真实:1.4), " + PROMPT_HEADER;
         }
 
         // Dynamic Footer
@@ -114,6 +130,7 @@ export function generatePromptSet(inputParams) {
 
         const promptText = [
           currentHeader,
+          lockBlock,
           stage.extra_prompt, // Stage specific description
           identityBlock,
           pose,
@@ -180,19 +197,16 @@ export function generatePromptSet(inputParams) {
       let currentNegative = NEGATIVE_PROMPT;
 
       if ((projectId === 'breast_augment' || projectId === 'breast_reduction') && faceStyle === 'cartoon') {
-        // Special Use Case: Breast Augmentation & Reduction (Cartoon Mode)
-        // -> Cartoon Face Filter + Real Body
-        const CARTOON_FACE_PROMPT = "(头部采用3D动漫滤镜:1.5), (卡通化五官:1.4), (匿名化处理:1.3), 抖音美颜风格, 磨皮, 眼睛放大, 漫画风格人脸, (身体保持写实质感:1.5), ";
+        const CARTOON_FACE_PROMPT = "(1024x1024:1.5), (头部采用3D动漫滤镜:1.5), (卡通化五官:1.4), (匿名化处理:1.3), 抖音美颜风格, 漫画风格人脸, (身体保持写实皮肤质感:1.6), (胸部轮廓细节清晰:1.4), ";
         currentHeader = CARTOON_FACE_PROMPT + baseHeader;
         currentNegative = "写实人脸, 真实五官, 身份证照片, (真人面部:1.2), " + NEGATIVE_PROMPT;
       } else if (!isFaceHairProject) {
-        // Standard Body Projects: Enforce Headless
-        // (Also applies to Breast Augment if faceStyle is 'headless' OR not specified)
-        currentHeader = "(聚焦身体部位:1.5), (无头视角:1.6), 不露脸, 不露出人脸, " + baseHeader;
+        // 身体项目：无头视角，强调皮肤质感和身体轮廓细节
+        currentHeader = "(1024x1024:1.5), (聚焦身体目标部位:1.6), (无头视角:1.7), 不露脸, (皮肤质感真实可见:1.5), (身体轮廓线条清晰:1.4), (自然体态:1.3), " + baseHeader;
         currentNegative = "人脸, 眼睛, 侧面视角, 侧脸, (露脸:1.5), " + NEGATIVE_PROMPT;
       } else {
-        // Face/Hair Projects: Focus on detail
-        currentHeader = "(特写:1.3), " + baseHeader;
+        // 面部/发际线项目：高清特写，五官细节
+        currentHeader = "(1024x1024:1.5), (面部特写:1.5), (五官细节清晰:1.5), (皮肤毛孔纹理可见:1.4), (自然面部光影:1.3), " + baseHeader;
       }
 
       // Dynamic Footer logic
@@ -210,6 +224,7 @@ export function generatePromptSet(inputParams) {
       // Construct Before Prompt
       const promptBefore = [
         currentHeader,
+        lockBlock,
         view,
         identityBlock,
         `(${beforeFeature}:1.5)`,
@@ -221,6 +236,7 @@ export function generatePromptSet(inputParams) {
       // Construct After Prompt
       const promptAfter = [
         currentHeader,
+        lockBlock,
         view,
         identityBlock,
         `(${afterFeature}:1.5)`,

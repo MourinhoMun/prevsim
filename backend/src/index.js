@@ -96,7 +96,7 @@ app.get('/api/license/balance', async (req, res) => {
 // ── 生成图片（扣 10 积分） ────────────────────────────────────
 app.post('/api/generate/image', licenseCheck('prevsim_generate_image', 10), async (req, res) => {
   try {
-    const r = await fetch(`${YUNWU_URL}/v1beta/models/gemini-3-pro-image-preview:generateContent`, {
+    const r = await fetch(`${YUNWU_URL}/v1beta/models/gemini-3.1-flash-image-preview:generateContent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -19,7 +19,7 @@
     <div v-if="success" class="alert alert-success mt-3 text-sm">{{ success }}</div>
 
     <p class="text-center text-sm text-base-content/60 mt-4">
-      如需获取充值码，请添加鹏哥微信：<span class="font-bold text-primary">peng_ip</span>
+      请联系鹏哥微信：<span class="font-bold text-primary">Peng_IP</span> 购买年卡或者获得7天试用
     </p>
   </div>
 </template>

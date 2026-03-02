@@ -12,13 +12,32 @@ function getAuthHeaders() {
 async function handleResponse(res) {
   const data = await res.json();
   if (res.status === 401 || res.status === 403) {
-    localStorage.removeItem('pengip_token');
-    window.dispatchEvent(new Event('auth:logout'));
-    throw new Error('登录已过期，请重新登录');
+    // 先尝试用主站 cookie 静默换新 token，避免误删有效的 deviceId 激活态
+    const renewed = await tryRenewToken();
+    if (!renewed) {
+      localStorage.removeItem('pengip_token');
+      window.dispatchEvent(new Event('auth:logout'));
+      throw new Error('登录已过期，请重新激活');
+    }
+    throw new Error('请刷新页面重试');
   }
   if (res.status === 402) throw Object.assign(new Error('积分不足，请充值'), { code: 402, balance: data.balance });
   if (!res.ok) throw new Error(data.error || '请求失败');
   return data;
+}
+
+// 尝试用主站 cookie 静默换新 token，成功返回 true
+async function tryRenewToken() {
+  try {
+    const res = await fetch('/api/v1/user/token');
+    if (!res.ok) return false;
+    const data = await res.json();
+    if (data.token) {
+      localStorage.setItem('pengip_token', data.token);
+      return true;
+    }
+  } catch {}
+  return false;
 }
 
 // 静默复用 pengip.com 网页登录态（同域，cookie 自动携带）
@@ -69,10 +88,12 @@ export async function getBalance() {
 }
 
 // 生成图片
-export async function generateImageAPI(prompt, referenceImageDataUrl = null, negativePrompt = '') {
+export async function generateImageAPI(prompt, referenceImages = [], negativePrompt = '') {
+  // 兼容单张图片传入
+  const refs = Array.isArray(referenceImages) ? referenceImages : (referenceImages ? [referenceImages] : []);
   const parts = [{ text: prompt }];
-  if (referenceImageDataUrl) {
-    const m = referenceImageDataUrl.match(/^data:(.+);base64,(.+)$/);
+  for (const img of refs) {
+    const m = img.match(/^data:(.+);base64,(.+)$/);
     if (m) parts.push({ inlineData: { mimeType: m[1], data: m[2] } });
   }
   const payload = {

@@ -53,6 +53,7 @@ const historyList = ref([]);
 const showHistory = ref(false);
 const useAICreative = ref(false);
 const isGeneratingText = ref(false);
+const lockPerson = ref(true); // 默认锁定人物
 
 const currentProject = computed(() => projects.find(p => p.id === selectedProject.value));
 const availableClothing = computed(() =>
@@ -145,7 +146,8 @@ async function handleGeneratePrompts() {
       customClothingPrompt: selectedClothing.value === 'custom' ? customClothingText.value : '',
       skinId: selectedSkin.value, bodyId: selectedBody.value, ageId: selectedAge.value,
       genderId: selectedGender.value, backgroundId: selectedBackground.value,
-      faceStyle: selectedFaceStyle.value, viewScope: selectedViewScope.value, styleVariations
+      faceStyle: selectedFaceStyle.value, viewScope: selectedViewScope.value, styleVariations,
+      lockPerson: lockPerson.value
     });
   } catch (e) { alert('生成出错: ' + e.message); }
 }
@@ -155,13 +157,22 @@ async function generateImage(promptId, promptText, type) {
   const isBefore = type === 'BEFORE' || type === 'stage_0';
   const isAfter = type === 'AFTER' || type === 'stage_final';
   const isRecovery = type === 'stage_recovery' || type === 'stage_14d' || type === 'stage_21d';
-  const refImg = isBefore ? referenceImageBefore.value
-    : isAfter ? referenceImageAfter.value
-    : isRecovery ? referenceImageRecovery.value : null;
+
+  // 锁定人物时：把所有已上传的参考图都传给 API，让模型看到这个人长什么样
+  // 不锁定时：只传对应状态的参考图（原有逻辑）
+  let refImgs;
+  if (lockPerson.value) {
+    refImgs = [referenceImageBefore.value, referenceImageRecovery.value, referenceImageAfter.value].filter(Boolean);
+  } else {
+    const single = isBefore ? referenceImageBefore.value
+      : isAfter ? referenceImageAfter.value
+      : isRecovery ? referenceImageRecovery.value : null;
+    refImgs = single ? [single] : [];
+  }
 
   generationLog.value.unshift({ id: Date.now(), text: `[${new Date().toLocaleTimeString()}] 开始生成 ${type} (#${promptId})...` });
   try {
-    const imageUrl = await generateImageAPI(promptText, refImg, generatedSet.value.negativePrompt || '');
+    const imageUrl = await generateImageAPI(promptText, refImgs, generatedSet.value.negativePrompt || '');
     balance.value = Math.max(0, balance.value - 10);
     if (type === 'BEFORE') {
       const item = generatedSet.value.beforePrompts.find(p => p.id === promptId);
@@ -248,7 +259,7 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
     <dialog class="modal" :class="{'modal-open': showRecharge}">
       <div class="modal-box max-w-md">
         <h3 class="font-bold text-lg text-error mb-2">积分不足</h3>
-        <p class="text-sm text-base-content/70 mb-4">如需购买充值码，请添加鹏哥微信：<span class="font-bold text-primary">peng_ip</span></p>
+        <p class="text-sm text-base-content/70 mb-4">请联系鹏哥微信：<span class="font-bold text-primary">Peng_IP</span> 购买年卡或者获得7天试用</p>
         <RechargePage @recharged="onRecharged" />
         <div class="modal-action mt-0">
           <button class="btn btn-sm btn-ghost" @click="showRecharge = false">关闭</button>
@@ -420,6 +431,9 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
             <div class="divider"></div>
 
             <!-- 参考图上传 -->
+            <div class="alert alert-warning mb-2 py-2 px-3 text-sm rounded-lg">
+              <span>⚠️ <strong>重要提示：</strong>必须上传素人底图，否则 AI 会随机生成陌生人的脸，而不是素人本人。</span>
+            </div>
             <div class="space-y-4">
               <div class="form-control w-full">
                 <label class="label"><span class="label-text font-bold text-warning">1. 术前参考图（可选）</span></label>
@@ -474,6 +488,18 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                 <input type="checkbox" class="toggle toggle-secondary toggle-sm" v-model="useAICreative"/>
               </label>
               <p class="text-[10px] text-base-content/60 px-1 mt-1">开启后使用 LLM 动态生成独特光影与氛围描述，消耗 1 积分。</p>
+            </div>
+
+            <!-- 锁定人物 -->
+            <div class="form-control w-full mt-2 p-3 bg-gradient-to-r from-base-200 to-base-100 rounded-lg border border-blue-500/20">
+              <label class="cursor-pointer label">
+                <div class="flex items-center gap-2">
+                  <span class="text-base">🔒</span>
+                  <span class="label-text font-bold text-blue-700 dark:text-blue-400">锁定人物</span>
+                </div>
+                <input type="checkbox" class="toggle toggle-info toggle-sm" v-model="lockPerson"/>
+              </label>
+              <p class="text-[10px] text-base-content/60 px-1 mt-1">开启后 AI 将严格保持参考图中人物的五官特征，确保生成结果是同一个人。默认开启。</p>
             </div>
 
             <!-- 生成按钮 -->
