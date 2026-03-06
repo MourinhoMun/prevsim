@@ -11,6 +11,10 @@ const LICENSE_URL = process.env.LICENSE_BACKEND_URL || 'https://pengip.com';
 const YUNWU_KEY = process.env.YUNWU_API_KEY;
 const YUNWU_URL = process.env.YUNWU_BASE_URL || 'https://yunwu.ai';
 
+// Fallback API (Plato)
+const FALLBACK_KEY = 'sk-xCOyBnu09492LdsNCk3suwvNeCong9CFpOS6wk3gwJfbU11o';
+const FALLBACK_URL = 'https://api.bltcy.ai';
+
 // ── 授权中间件：验证 token + 扣积分 ──────────────────────────
 function licenseCheck(software, cost) {
   return async (req, res, next) => {
@@ -96,7 +100,7 @@ app.get('/api/license/balance', async (req, res) => {
 // ── 生成图片（扣 10 积分） ────────────────────────────────────
 app.post('/api/generate/image', licenseCheck('prevsim_generate_image', 10), async (req, res) => {
   try {
-    const r = await fetch(`${YUNWU_URL}/v1beta/models/gemini-3.1-flash-image-preview:generateContent`, {
+    let r = await fetch(`${YUNWU_URL}/v1beta/models/gemini-3.1-flash-image-preview:generateContent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,6 +108,19 @@ app.post('/api/generate/image', licenseCheck('prevsim_generate_image', 10), asyn
       },
       body: JSON.stringify(req.body)
     });
+
+    if (!r.ok) {
+      console.warn('Primary API (yunwu.ai) failed, switching to fallback (Plato)');
+      r = await fetch(`${FALLBACK_URL}/v1beta/models/gemini-3-pro-image-preview:generateContent`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${FALLBACK_KEY}`
+        },
+        body: JSON.stringify(req.body)
+      });
+    }
+
     const data = await r.json();
     if (!r.ok) return res.status(r.status).json({ error: data.error?.message || '生成失败' });
     res.json(data);

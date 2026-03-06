@@ -152,6 +152,31 @@ async function handleGeneratePrompts() {
   } catch (e) { alert('生成出错: ' + e.message); }
 }
 
+
+async function handleGenerateImages(type, stageId = null) {
+  if (!generatedSet.value) {
+    alert('请先点击左侧“生成模拟效果图”生成提示词');
+    return;
+  }
+  let prompts = [];
+  if (type === 'BEFORE') prompts = generatedSet.value.beforePrompts || [];
+  else if (type === 'AFTER') prompts = generatedSet.value.afterPrompts || [];
+  else if (type === 'STAGE' && stageId) {
+    const stage = (generatedSet.value.timelineStages || []).find(s => s.id === stageId);
+    prompts = stage ? (stage.prompts || []) : [];
+  }
+  prompts = prompts.filter(p => !p.imageUrl);
+  if (!prompts.length) {
+    alert('该模块没有需要生成的图片（可能都已生成）。');
+    return;
+  }
+
+  for (const p of prompts) {
+    // sequential generation to avoid rate limits
+    await generateImage(p.id, p.prompt, type === 'STAGE' ? stageId : type);
+  }
+}
+
 async function generateImage(promptId, promptText, type) {
   generatingMap.value[promptId] = true;
   const isBefore = type === 'BEFORE' || type === 'stage_0';
@@ -194,6 +219,7 @@ async function generateImage(promptId, promptText, type) {
       project: currentProject.value?.name_zh || selectedProject.value,
       stage: type, prompt: promptText
     });
+    if (historyList.value.length > 20) historyList.value = historyList.value.slice(0, 20);
   } catch (e) {
     generationLog.value.unshift({ id: Date.now(), text: `❌ 生成失败: ${e.message}` });
     if (e.code === 402) { showRecharge.value = true; }
@@ -346,6 +372,10 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                 <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name_zh }} ({{ p.name_en }})</option>
               </select>
               <p class="text-xs text-base-content/50 mt-1">{{ currentProject.description }}</p>
+              <p v-if="selectedProject === 'double_eyelid'" class="text-[11px] text-warning mt-2 leading-snug">
+                提示：单眼皮的自然模拟在部分照片上可能很难（与眼裂、眼窝、光线、美颜程度有关）。
+                建议上传正脸、光线均匀、无遮挡、无美颜的照片；如不自然可换图或降低“改善程度”。
+              </p>
             </div>
 
             <!-- 改善程度 -->
@@ -432,7 +462,7 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
 
             <!-- 参考图上传 -->
             <div class="alert alert-warning mb-2 py-2 px-3 text-sm rounded-lg">
-              <span>⚠️ <strong>重要提示：</strong>必须上传素人底图，否则 AI 会随机生成陌生人的脸，而不是素人本人。</span>
+              <span>⚠️ <strong>重要提示：</strong>如果要生成特定五官，请上传特定五官的底图。否则系统不会生成特定五官的图。</span>
             </div>
             <div class="alert alert-info mb-2 py-2 px-3 text-sm rounded-lg">
               <span>💡 <strong>效果建议：</strong>
@@ -550,7 +580,10 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
               <div class="collapse-title text-xl font-medium flex items-center gap-2 w-full pr-4">
                 <span class="badge badge-primary badge-lg">{{ stage.name }}</span>
                 <span class="text-sm opacity-50 font-normal flex-1">{{ stage.description }}</span>
-                <button class="btn btn-sm btn-outline gap-1 z-50 ml-auto" @click.stop="downloadBatch('STAGE', stage.id)">
+                <button class="btn btn-sm btn-primary gap-1 z-50 ml-auto" @click.stop="handleGenerateImages('STAGE', stage.id)">
+                  <Wand2 class="w-4 h-4"/> 一键生成
+                </button>
+                <button class="btn btn-sm btn-outline gap-1 z-50" @click.stop="downloadBatch('STAGE', stage.id)">
                   <Download class="w-4 h-4"/> 打包下载
                 </button>
               </div>
@@ -597,9 +630,14 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   <span>术前状态 (BEFORE)</span>
                   <span class="text-sm font-normal opacity-50">对照 A</span>
                 </h3>
-                <button class="btn btn-sm btn-outline btn-warning gap-2" @click="downloadBatch('BEFORE')">
-                  <Download class="w-4 h-4"/> 批量下载
-                </button>
+                <div class="flex gap-2">
+                  <button class="btn btn-sm btn-warning gap-2" @click="handleGenerateImages('BEFORE')">
+                    <Wand2 class="w-4 h-4"/> 一键生成
+                  </button>
+                  <button class="btn btn-sm btn-outline btn-warning gap-2" @click="downloadBatch('BEFORE')">
+                    <Download class="w-4 h-4"/> 打包下载
+                  </button>
+                </div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div v-for="(item, idx) in generatedSet.beforePrompts" :key="item.id"
@@ -646,9 +684,14 @@ function deleteHistoryItem(id) { historyList.value = historyList.value.filter(i 
                   <span>术后效果 (AFTER)</span>
                   <span class="text-sm font-normal opacity-50">对照 B</span>
                 </h3>
-                <button class="btn btn-sm btn-outline btn-success gap-2" @click="downloadBatch('AFTER')">
-                  <Download class="w-4 h-4"/> 批量下载
-                </button>
+                <div class="flex gap-2">
+                  <button class="btn btn-sm btn-success gap-2" @click="handleGenerateImages('AFTER')">
+                    <Wand2 class="w-4 h-4"/> 一键生成
+                  </button>
+                  <button class="btn btn-sm btn-outline btn-success gap-2" @click="downloadBatch('AFTER')">
+                    <Download class="w-4 h-4"/> 打包下载
+                  </button>
+                </div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div v-for="(item, idx) in generatedSet.afterPrompts" :key="item.id"

@@ -113,7 +113,8 @@ export function generatePromptSet(inputParams) {
         let currentHeader = "";
 
         if (projectId === 'hair_transplant') {
-          currentHeader = "(1024x1024:1.5), (手抓起头发暴露发际线:1.6), (前额特写:1.5), (头皮毛囊细节清晰:1.4), " + PROMPT_HEADER;
+          // Avoid generating two hands; keep it as a single hand action.
+          currentHeader = "(1024x1024:1.5), (单手抓起头发暴露发际线:1.6), (前额特写:1.5), (头皮毛囊细节清晰:1.4), " + PROMPT_HEADER;
         } else if (['nasal_synthesis', 'alar_reduction', 'nasal_base_augment', 'eye_bags', 'chin_plasty', 'mandible_reduction', 'zygoma_reduction', 'brow_ridge_augment', 'face_lift', 'forehead_augment'].includes(projectId)) {
           currentHeader = "(1024x1024:1.5), (面部特写:1.6), (五官细节极清晰:1.5), (皮肤纹理毛孔可见:1.4), (自然面部光影:1.3), " + PROMPT_HEADER;
         } else {
@@ -207,6 +208,17 @@ export function generatePromptSet(inputParams) {
       } else {
         // 面部/发际线项目：高清特写，五官细节
         currentHeader = "(1024x1024:1.5), (面部特写:1.5), (五官细节清晰:1.5), (皮肤毛孔纹理可见:1.4), (自然面部光影:1.3), " + baseHeader;
+      }
+
+      // Surgery-specific constraints
+      if (projectId === 'double_eyelid') {
+        // Avoid unintended under-eye edits when simulating eyelids.
+        currentHeader = currentHeader + "(仅改变上眼睑褶皱/上睑形态:1.6), (禁止改变下眼睑/眼袋/泪沟/黑眼圈/卧蚕:1.7), (保持下眼睑纹理与体积不变:1.6), ";
+        // Recovery stage: allow realistic early post-op signs on upper eyelids only.
+        if (stage && (stage.id === 'recovery' || stage.id === 'stage_recovery')) {
+          currentHeader = currentHeader + "(术后恢复期表现: 轻度肿胀/淤青/红肿/贴胶布，真实自然:1.5), (非最终效果:1.4), ";
+        }
+        currentNegative = "祛眼袋, 眼袋消失, 下眼睑变平滑, 泪沟消失, 黑眼圈消失, 卧蚕变大, 夸张双眼皮, 网红双眼皮, 美颜, 皮肤磨皮, 大眼, 动漫眼, " + currentNegative;
       }
 
       // Dynamic Footer logic

@@ -176,6 +176,47 @@
       ]
     },
     {
+      "id": "double_eyelid",
+      "name_zh": "双眼皮 (Double Eyelid)",
+      "name_en": "Double Eyelid",
+      "body_part": "face",
+      "description": "眼部特写/全脸均可，模拟术前单双眼皮与术后双眼皮效果。提示：单眼皮模拟在部分照片上可能不自然。",
+      "views": [
+        "眼部特写正面 (Eye Close-up Front)",
+        "正面平视 (Eye Level Full Face)"
+      ],
+      "severity_levels": {
+        "mild": {
+          "before": "自然单眼皮或内双，褶皱不明显，上睑较平整，保持原有眼袋与泪沟不变",
+          "after": "自然的双眼皮褶皱（非夸张网红款），上睑褶皱清晰但克制，眼神更有精神；严禁改变下睑/眼袋/泪沟/黑眼圈"
+        },
+        "significant": {
+          "before": "明显单眼皮，上睑褶皱缺失或极浅，保持下睑、眼袋、泪沟、黑眼圈完全不变",
+          "after": "更明显但仍自然的双眼皮（切开/埋线风格自然），上睑轮廓更立体；严禁改变下睑/眼袋/泪沟/黑眼圈"
+        }
+      },
+      "timeline_stages": [
+        {
+          "id": "pre",
+          "name": "术前",
+          "description": "术前单双眼皮状态",
+          "extra_prompt": "术前状态，仅描述上眼睑。禁止任何美颜或皮肤平滑。保持下睑与眼袋泪沟不变。"
+        },
+        {
+          "id": "recovery",
+          "name": "康复中",
+          "description": "术后早期恢复期（肿胀/淤青期）",
+          "extra_prompt": "术后恢复期（非最终效果）。上眼睑可见符合恢复期的轻度肿胀/淤青/贴胶布或轻微红肿，但必须真实自然；双眼皮形态正在稳定中。严禁改变下睑/眼袋/泪沟/黑眼圈。"
+        },
+        {
+          "id": "post",
+          "name": "术后",
+          "description": "术后双眼皮效果",
+          "extra_prompt": "术后双眼皮最终效果，仅改变上眼睑褶皱与上睑皮肤张力，其他部位完全不变。"
+        }
+      ]
+    },
+    {
       "id": "eye_bags",
       "name_zh": "去眼袋 (Eye Bags Removal)",
       "name_en": "Lower Eyelid Surgery",
@@ -184,8 +225,7 @@
       "views": [
         "眼部特写 (Extreme Eye Closeup)",
         "双眼正面 (Front Eyes View)",
-        "45度眼部侧写 (45-degree Eyes)",
-        "仰视眼袋 (Upward Gaze)",
+        "眼部特写 (Extreme Eye Closeup)",
         "自然闭眼 (Closed Eyes)"
       ],
       "severity_levels": {
