@@ -79,6 +79,8 @@ export function generatePromptSet(inputParams) {
         "(相同的嘴唇厚度和形状:1.5)",
         "(相同的肤色和皮肤质感:1.6)",
         "(保留参考图中可见的皮肤细节和特征:1.4)",
+        "(保持参考图中的服饰款式和颜色:1.5)",
+        "(保持参考图中的背景环境:1.4)",
         "(人物身份不变:1.8)",
         "不换脸, 不改变人物身份"
       ].join(", ") + ", "
@@ -108,7 +110,7 @@ export function generatePromptSet(inputParams) {
       // Generate 5 images per stage
       for (let i = 0; i < 5; i++) {
         const pose = POSE_VARIATIONS[i % POSE_VARIATIONS.length];
-        const light = (inputParams.backgroundId === 'original') ? "" : LIGHTING_VARIATIONS[i % LIGHTING_VARIATIONS.length];
+        const light = lockPerson !== false ? "" : ((inputParams.backgroundId === 'original') ? "" : LIGHTING_VARIATIONS[i % LIGHTING_VARIATIONS.length]);
 
         let currentHeader = "";
 
@@ -159,7 +161,7 @@ export function generatePromptSet(inputParams) {
       const pose = POSE_VARIATIONS[i % POSE_VARIATIONS.length];
       // If solid background is chosen, lighting should match studio style (or be simpler), but our current variations are okay.
       // If "original" background is chosen, suppress specific lighting prompts to let reference image dictate lighting & context.
-      let light = LIGHTING_VARIATIONS[i % LIGHTING_VARIATIONS.length];
+      let light = lockPerson !== false ? "" : LIGHTING_VARIATIONS[i % LIGHTING_VARIATIONS.length];
       if (inputParams.backgroundId === 'original') {
         light = "";
       }
